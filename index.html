@@ -1,0 +1,859 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f7efe9">
+<title>Свадебное приглашение</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f5efe8;
+  --paper:#fffdf9;
+  --blush:#fbf1ee;
+  --ink:#2f3a36;
+  --muted:#857f7a;
+  --sage:#8fa596;
+  --sage-d:#5d7466;
+  --rose:#c97d82;
+  --rose-d:#a85f66;
+  --gold:#b8995a;
+  --line:#ece2d8;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:var(--bg);color:var(--ink);
+  font-family:"Cormorant Garamond",Georgia,serif;font-size:19px;line-height:1.55;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+body.locked{overflow:hidden;height:100vh}
+.script{font-family:"Great Vibes",cursive;font-weight:400}
+.caps{font-family:Montserrat,sans-serif;font-size:11px;letter-spacing:.32em;text-transform:uppercase;color:var(--muted)}
+button{font:inherit}
+
+/* ============ ВОРОТА ============ */
+#intro{
+  position:fixed;inset:0;z-index:100;overflow:hidden;
+  background:
+    radial-gradient(120% 60% at 50% 100%, #efe5d8 0 30%, transparent 31%),
+    radial-gradient(60% 30% at 12% 72%, #a9bba9 0 60%, transparent 61%),
+    radial-gradient(60% 30% at 88% 72%, #a9bba9 0 60%, transparent 61%),
+    radial-gradient(80% 35% at 50% 70%, #c3d0c0 0 60%, transparent 61%),
+    linear-gradient(#f3e3e0 0%, #f4eee8 45%, #e9ede2 100%);
+  display:flex;align-items:center;justify-content:center;
+  transition:opacity 1.2s ease 1.6s, visibility 0s linear 2.8s;
+}
+#intro.open{opacity:0;visibility:hidden}
+#intro .glow{position:absolute;left:50%;top:42%;width:70vmin;height:70vmin;transform:translate(-50%,-50%);
+  background:radial-gradient(circle,#fff8ef 0%,rgba(255,248,239,0) 70%);pointer-events:none}
+#intro .bush{position:absolute;bottom:-2%;width:46%;max-width:300px;z-index:7;pointer-events:none}
+#intro .bush.l{left:-6%}
+#intro .bush.r{right:-6%;transform:scaleX(-1)}
+.gate-wrap{position:relative;width:min(94vw,460px);aspect-ratio:460/620;max-height:86vh;perspective:1400px}
+.pillar{position:absolute;top:8%;bottom:0;width:11%;z-index:3;
+  background:linear-gradient(90deg,#ddd3c4,#f7f2e9 45%,#d6ccbb);
+  border-radius:3px 3px 0 0;box-shadow:inset 0 0 0 1px rgba(0,0,0,.05),0 8px 20px rgba(60,60,40,.15)}
+.pillar::before{content:"";position:absolute;left:-12%;right:-12%;top:-3%;height:5%;background:#eee6d8;border-radius:3px;box-shadow:0 2px 0 #d6ccb8}
+.pillar.l{left:0}.pillar.r{right:0}
+.pillar .cap{position:absolute;left:50%;top:-16%;transform:translateX(-50%);width:230%}
+.pillar .vine{position:absolute;inset:4% 0 0 0}
+.leaf{position:absolute;top:0;bottom:0;width:39%;z-index:2;transition:transform 2.2s cubic-bezier(.6,.05,.25,1)}
+.leaf svg{width:100%;height:100%;display:block;overflow:visible;filter:drop-shadow(0 6px 6px rgba(30,40,35,.22))}
+.leaf.l{left:11%;transform-origin:left center}
+.leaf.r{right:11%;transform-origin:right center}
+.leaf.r svg{transform:scaleX(-1)}
+#intro.open .leaf.l{transform:rotateY(-105deg)}
+#intro.open .leaf.r{transform:rotateY(105deg)}
+.garland{position:absolute;left:3%;right:3%;top:-3%;z-index:4;pointer-events:none;overflow:visible}
+.seal{
+  position:absolute;left:50%;top:57%;transform:translate(-50%,-50%);z-index:5;
+  width:98px;height:98px;border-radius:50%;border:0;cursor:pointer;
+  background:radial-gradient(circle at 35% 30%,#e3a9a9,#c97d82 55%,#9c555c);
+  box-shadow:0 6px 18px rgba(110,40,50,.35), inset 0 0 0 4px rgba(255,255,255,.2), inset 0 -4px 8px rgba(0,0,0,.2);
+  color:#fff8f3;font-family:"Great Vibes",cursive;font-size:30px;line-height:1;white-space:nowrap;
+  animation:pulse 2.4s ease-in-out infinite;transition:opacity .5s, transform .5s;
+}
+.seal::after{content:"";position:absolute;inset:9px;border-radius:50%;border:1px dashed rgba(255,255,255,.45)}
+.seal:focus-visible{outline:2px solid var(--ink);outline-offset:4px}
+#intro.open .seal{opacity:0;transform:translate(-50%,-50%) scale(.6);animation:none}
+@keyframes pulse{0%,100%{box-shadow:0 6px 18px rgba(110,40,50,.35),0 0 0 0 rgba(201,125,130,.5),inset 0 0 0 4px rgba(255,255,255,.2)}50%{box-shadow:0 6px 18px rgba(110,40,50,.35),0 0 0 18px rgba(201,125,130,0),inset 0 0 0 4px rgba(255,255,255,.2)}}
+.tap{position:absolute;left:0;right:0;bottom:4%;text-align:center;z-index:8;transition:opacity .4s}
+.tap .caps{color:#5a4f4c;background:rgba(255,253,249,.85);padding:10px 18px;border-radius:30px;backdrop-filter:blur(4px);box-shadow:0 4px 14px rgba(0,0,0,.06)}
+#intro.open .tap{opacity:0}
+
+/* ============ СТРАНИЦА ============ */
+#progress{position:fixed;left:0;top:0;height:3px;width:0;z-index:70;background:linear-gradient(90deg,var(--sage),var(--rose),var(--gold))}
+main{max-width:520px;margin:0 auto;background:var(--paper);box-shadow:0 0 60px rgba(60,40,40,.08);position:relative;overflow:hidden;padding-bottom:40px}
+section{padding:96px 28px 76px;text-align:center;position:relative;scroll-margin-top:0}
+section.tint{background:linear-gradient(var(--blush),var(--paper))}
+section > *{position:relative;z-index:1}
+h2{font-family:"Great Vibes",cursive;font-weight:400;font-size:48px;line-height:1.1;color:var(--rose-d);margin:8px 0 22px}
+p{color:#4d5550}
+.corner{position:absolute;width:118px;pointer-events:none;z-index:0}
+.corner.tl{left:-16px;top:-12px}
+.corner.tr{right:-16px;top:-12px;transform:scaleX(-1)}
+.corner.bl{left:-16px;bottom:-12px;transform:scaleY(-1)}
+.corner.br{right:-16px;bottom:-12px;transform:scale(-1,-1)}
+.corner svg{width:100%;height:auto;display:block;overflow:visible}
+.fdivider{display:block;width:220px;margin:20px auto;overflow:visible}
+
+.hero{min-height:100vh;min-height:100svh;display:flex;flex-direction:column;justify-content:center;padding-top:56px;
+  background:
+    radial-gradient(50% 30% at 0% 10%, rgba(244,211,208,.55), transparent 70%),
+    radial-gradient(50% 30% at 100% 25%, rgba(201,214,197,.55), transparent 70%),
+    radial-gradient(60% 30% at 50% 100%, rgba(243,201,168,.35), transparent 70%),
+    var(--paper)}
+.hero .arch{width:min(78%,330px);margin:0 auto 26px;aspect-ratio:3/4;border-radius:200px 200px 6px 6px;
+  border:1px solid var(--gold);padding:10px;position:relative}
+.hero .arch::after{content:"";position:absolute;inset:-7px;border-radius:210px 210px 9px 9px;border:1px solid rgba(184,153,90,.35)}
+.hero .arch-in{width:100%;height:100%;border-radius:190px 190px 2px 2px;overflow:hidden;
+  background:radial-gradient(90% 60% at 50% 42%,#fffaf4,#f6ebe7 65%,#ebeee6);display:flex;align-items:center;justify-content:center}
+.hero .arch-in svg{width:100%;height:100%}
+.hero .names{font-size:clamp(56px,15vw,78px);line-height:1;color:var(--ink)}
+.hero .amp{display:block;font-size:.55em;color:var(--rose);margin:4px 0}
+.hero .date{font-size:22px;letter-spacing:.18em;margin-top:18px;font-weight:500}
+.hero .place{font-size:17px;color:var(--muted);font-style:italic}
+.scroll-hint{margin:30px auto 0;width:26px;height:42px;border:1px solid var(--rose);border-radius:20px;position:relative}
+.scroll-hint::after{content:"";position:absolute;left:50%;top:8px;width:4px;height:8px;border-radius:2px;background:var(--rose);transform:translateX(-50%);animation:wheel 1.8s ease-in-out infinite}
+@keyframes wheel{0%{opacity:0;top:7px}30%{opacity:1}100%{opacity:0;top:22px}}
+
+/* календарь */
+.cal{max-width:330px;margin:10px auto 0;background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px 14px 12px;box-shadow:0 10px 30px rgba(120,80,70,.06)}
+.cal .month{font-size:24px;text-transform:capitalize;margin-bottom:10px;letter-spacing:.06em}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px 0;font-family:Montserrat,sans-serif;font-size:13px}
+.cal-grid .dow{color:var(--muted);font-size:10px;letter-spacing:.15em;padding-bottom:6px;height:auto}
+.cal-grid div{height:36px;display:flex;align-items:center;justify-content:center;position:relative}
+.cal-grid .we{color:var(--rose)}
+.cal-grid .hit{color:#fff;font-weight:600;z-index:0}
+.cal-grid .hit::before{content:"";position:absolute;width:40px;height:40px;z-index:-1;animation:beat 1.6s ease-in-out infinite;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23c97d82' d='M12 21s-7.5-4.6-9.6-9.2C.9 8.4 3 4.5 6.7 4.5c2.1 0 3.6 1.2 5.3 3.1 1.7-1.9 3.2-3.1 5.3-3.1 3.7 0 5.8 3.9 4.3 7.3C19.5 16.4 12 21 12 21z'/%3E%3C/svg%3E") center/contain no-repeat}
+@keyframes beat{0%,100%{transform:scale(1)}15%{transform:scale(1.14)}30%{transform:scale(1)}45%{transform:scale(1.08)}}
+
+/* отсчёт */
+.count{display:flex;justify-content:center;gap:8px;margin-top:8px}
+.count .u{flex:1;max-width:76px;padding:16px 0 10px;border:1px solid var(--line);border-radius:60px 60px 10px 10px;background:#fff;box-shadow:0 8px 20px rgba(120,80,70,.05)}
+.count b{display:block;font-size:34px;font-weight:500;line-height:1;font-variant-numeric:tabular-nums;color:var(--ink)}
+.count span{font-family:Montserrat,sans-serif;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.btn-row{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:26px}
+
+/* история */
+.story{display:grid;gap:16px;text-align:left;max-width:380px;margin:0 auto}
+.st{display:grid;grid-template-columns:62px 1fr;gap:14px;align-items:start;background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px;box-shadow:0 8px 24px rgba(120,80,70,.05)}
+.st .yr{width:62px;height:62px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-direction:column;
+  background:var(--blush);border:1px solid #f0d8d4;font-weight:600;font-size:18px;color:var(--rose-d);line-height:1}
+.st .yr svg{margin-bottom:3px}
+.st h3{font-size:21px;font-weight:600;line-height:1.2;margin:2px 0 3px}
+.st p{font-size:16.5px;line-height:1.45}
+
+/* программа */
+.tl{position:relative;max-width:360px;margin:0 auto;text-align:left}
+.tl::before{content:"";position:absolute;left:86px;top:14px;bottom:14px;width:1px;background:linear-gradient(var(--line),var(--rose),var(--line))}
+.tl .it{display:grid;grid-template-columns:70px 32px 1fr;align-items:start;padding:12px 0}
+.tl .t{font-size:24px;font-weight:500;text-align:right;line-height:1.2}
+.tl .ic{width:26px;height:26px;margin:2px auto 0;border-radius:50%;background:var(--paper);display:flex;align-items:center;justify-content:center;position:relative;z-index:1}
+.tl h3{font-weight:600;font-size:20px;line-height:1.2}
+.tl p{font-size:16px;color:var(--muted)}
+
+/* место */
+.venue{font-size:27px;font-weight:500;line-height:1.2}
+.addr{display:inline-flex;align-items:center;gap:8px;margin-top:6px;background:none;border:0;color:#4d5550;cursor:pointer;font-size:18px;border-bottom:1px dashed #cdbfb2;padding:2px 0}
+.addr svg{color:var(--rose)}
+.map{margin:22px 0 18px;border-radius:18px;overflow:hidden;border:6px solid #fff;box-shadow:0 10px 30px rgba(120,80,70,.12);aspect-ratio:4/3;background:#eef0ea}
+.map iframe{width:100%;height:100%;border:0;display:block}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:Montserrat,sans-serif;font-size:11.5px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;
+  color:#fff;background:linear-gradient(135deg,var(--rose),var(--rose-d));border:0;border-radius:40px;padding:15px 24px;text-decoration:none;cursor:pointer;
+  box-shadow:0 8px 20px rgba(168,95,102,.25);transition:transform .2s,box-shadow .2s,filter .2s}
+.btn:hover{filter:brightness(1.05);box-shadow:0 10px 24px rgba(168,95,102,.32)}
+.btn:active{transform:scale(.97)}
+.btn.ghost{background:#fff;color:var(--rose-d);border:1px solid #ecd0cd;box-shadow:none}
+.btn.sage{background:linear-gradient(135deg,var(--sage),var(--sage-d));box-shadow:0 8px 20px rgba(93,116,102,.25)}
+.btn:disabled{opacity:.6;cursor:default}
+
+/* дресс-код */
+.swatches{display:flex;justify-content:center;gap:10px 12px;margin:22px 0 10px;flex-wrap:wrap}
+.sw{display:grid;justify-items:center;gap:6px;width:62px}
+.sw i{width:50px;height:50px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(0,0,0,.06),0 4px 10px rgba(0,0,0,.08);border:3px solid #fff}
+.sw span{font-family:Montserrat,sans-serif;font-size:9px;letter-spacing:.08em;color:var(--muted);text-transform:uppercase;line-height:1.2}
+.dress{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px;text-align:left}
+.dress div{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px}
+.dress h3{font-size:19px;font-weight:600;display:flex;gap:8px;align-items:center;margin-bottom:4px}
+.dress p{font-size:15.5px;line-height:1.4}
+
+/* карточки */
+.cards{display:grid;gap:14px;text-align:left}
+.card{border:1px solid var(--line);border-radius:16px;padding:18px 20px;background:#fff;display:grid;grid-template-columns:44px 1fr;gap:14px;align-items:start;box-shadow:0 8px 24px rgba(120,80,70,.04)}
+.card .ico{width:44px;height:44px;border-radius:50%;background:var(--blush);display:flex;align-items:center;justify-content:center;color:var(--rose-d)}
+.card h3{font-size:20px;font-weight:600;line-height:1.2;margin-bottom:3px}
+.card p{font-size:16.5px;line-height:1.45}
+
+/* FAQ */
+.faq{text-align:left;max-width:400px;margin:0 auto;display:grid;gap:10px}
+.faq details{background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.faq summary{list-style:none;cursor:pointer;padding:15px 48px 15px 18px;font-weight:600;font-size:18px;position:relative;line-height:1.3}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";position:absolute;right:16px;top:50%;transform:translateY(-50%);width:26px;height:26px;border-radius:50%;background:var(--blush);color:var(--rose-d);
+  display:flex;align-items:center;justify-content:center;font-family:Montserrat,sans-serif;font-size:16px;transition:transform .3s}
+.faq details[open] summary::after{transform:translateY(-50%) rotate(45deg)}
+.faq details p{padding:0 18px 16px;font-size:16.5px}
+
+/* контакты */
+.contact{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px;max-width:360px;margin:0 auto}
+.contact .who{font-size:24px;font-weight:600}
+.contact .role{margin-bottom:14px}
+
+/* анкета */
+form{text-align:left;display:grid;gap:20px;max-width:390px;margin:0 auto;background:#fff;border:1px solid var(--line);border-radius:20px;padding:24px 20px;box-shadow:0 12px 34px rgba(120,80,70,.07)}
+label.f{display:grid;gap:6px}
+.f > span,.legend{font-family:Montserrat,sans-serif;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+input[type=text],textarea{
+  font:inherit;font-size:18px;color:var(--ink);background:var(--blush);border:1px solid transparent;padding:11px 14px;border-radius:12px;outline:none;width:100%;transition:border-color .2s,background .2s}
+input[type=text]:focus,textarea:focus{border-color:var(--rose);background:#fff}
+input.err{border-color:#c0544c;background:#fff4f2}
+.errmsg{font-size:14px;color:#b0473f;display:none}
+.errmsg.show{display:block}
+textarea{resize:vertical;min-height:80px}
+.opts{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.opts label{cursor:pointer;flex:1}
+.opts input{position:absolute;opacity:0;pointer-events:none}
+.opts span{display:block;text-align:center;padding:11px 12px;border:1px solid var(--line);border-radius:12px;font-size:17px;transition:.2s;background:#fff}
+.opts input:checked + span{background:var(--rose);color:#fff;border-color:var(--rose);box-shadow:0 6px 14px rgba(201,125,130,.3)}
+.opts input:focus-visible + span{outline:2px solid var(--gold);outline-offset:2px}
+.stepper{display:flex;align-items:center;gap:0;margin-top:8px;width:max-content;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.stepper button{width:46px;height:44px;border:0;background:var(--blush);color:var(--rose-d);font-size:22px;cursor:pointer}
+.stepper button:active{background:#f3dcd8}
+.stepper output{width:56px;text-align:center;font-size:22px;font-weight:600}
+.hide{display:none!important}
+.thanks{display:none;padding:30px 22px;border:1px solid var(--line);border-radius:20px;background:#fff;max-width:390px;margin:0 auto}
+.thanks.show{display:block;animation:pop .6s ease}
+@keyframes pop{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:none}}
+
+footer{padding:70px 28px 130px;text-align:center;background:linear-gradient(var(--paper),var(--blush));position:relative;overflow:hidden}
+footer .script{font-size:54px;color:var(--rose-d);line-height:1}
+
+/* появление */
+.rv{opacity:0;transform:translateY(26px);transition:opacity .9s ease,transform .9s ease}
+.rv.in{opacity:1;transform:none}
+
+/* нижнее меню */
+#nav{position:fixed;left:50%;bottom:max(12px,env(safe-area-inset-bottom));transform:translate(-50%,140%);z-index:55;
+  display:flex;gap:2px;padding:6px;border-radius:24px;background:rgba(255,253,249,.88);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  box-shadow:0 10px 30px rgba(90,50,50,.15);border:1px solid rgba(236,226,216,.9);transition:transform .6s cubic-bezier(.2,.9,.3,1.2);width:min(calc(100vw - 24px),400px)}
+#nav.show{transform:translate(-50%,0)}
+#nav a{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:7px 2px 6px;border-radius:18px;text-decoration:none;color:var(--muted);
+  font-family:Montserrat,sans-serif;font-size:9px;letter-spacing:.06em;transition:background .25s,color .25s}
+#nav a.on{background:var(--blush);color:var(--rose-d)}
+
+/* музыка */
+#music{position:fixed;right:14px;bottom:92px;z-index:56;width:46px;height:46px;border-radius:50%;border:1px solid var(--line);
+  background:rgba(255,253,249,.92);backdrop-filter:blur(6px);color:var(--rose-d);cursor:pointer;display:none;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(0,0,0,.08)}
+#music.on svg{animation:spin 4s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* тост */
+#toast{position:fixed;left:50%;top:18px;transform:translate(-50%,-160%);z-index:90;background:var(--ink);color:#fff;font-family:Montserrat,sans-serif;font-size:13px;
+  padding:12px 20px;border-radius:30px;box-shadow:0 10px 24px rgba(0,0,0,.2);transition:transform .4s cubic-bezier(.2,.9,.3,1.2);max-width:90vw;text-align:center}
+#toast.show{transform:translate(-50%,0)}
+
+/* лепестки */
+.petal{position:fixed;top:-20px;z-index:60;pointer-events:none;width:12px;height:12px;border-radius:12px 0 12px 0;
+  box-shadow:0 1px 2px rgba(0,0,0,.08);animation:fall linear forwards}
+@keyframes fall{to{transform:translate(var(--dx),110vh) rotate(var(--r))}}
+
+@media (prefers-reduced-motion:reduce){
+  .rv{opacity:1;transform:none;transition:none}
+  .leaf{transition-duration:.01s}
+  .seal,.scroll-hint::after,.cal-grid .hit::before{animation:none}
+}
+</style>
+</head>
+<body class="locked">
+<div id="progress"></div>
+<div id="toast" role="status" aria-live="polite"></div>
+
+<!-- ============ ВОРОТА ============ -->
+<div id="intro" aria-label="Заставка приглашения">
+  <div class="glow"></div>
+  <div class="gate-wrap">
+    <div class="pillar l"><div class="vine" data-vine></div><div class="cap" data-cap></div></div>
+    <div class="pillar r"><div class="vine" data-vine></div><div class="cap" data-cap></div></div>
+    <div class="leaf l" data-leaf></div>
+    <div class="leaf r" data-leaf></div>
+    <svg class="garland" id="garland" viewBox="0 0 460 130" aria-hidden="true"></svg>
+    <button class="seal" id="openBtn" aria-label="Открыть приглашение"><span id="sealMono">А&amp;А</span></button>
+  </div>
+  <div class="bush l" data-bush></div>
+  <div class="bush r" data-bush></div>
+  <div class="tap"><span class="caps">Нажмите на печать</span></div>
+</div>
+
+<nav id="nav" aria-label="Разделы">
+  <a href="#home" data-nav="home"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 20s-7-4.4-8.8-8.6C1.8 8.2 3.8 5 7 5c2 0 3.4 1.1 5 2.9C13.6 6.1 15 5 17 5c3.2 0 5.2 3.2 3.8 6.4C19 15.6 12 20 12 20z"/></svg>Главная</a>
+  <a href="#date" data-nav="date"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3.5" y="5" width="17" height="15" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>Дата</a>
+  <a href="#program" data-nav="program"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>Программа</a>
+  <a href="#place" data-nav="place"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Место</a>
+  <a href="#rsvp" data-nav="rsvp"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3.5" y="5.5" width="17" height="13" rx="2"/><path d="M4 7l8 6 8-6"/></svg>Анкета</a>
+</nav>
+
+<button id="music" aria-label="Музыка">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 18V5l11-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="17" cy="16" r="3"/></svg>
+</button>
+<audio id="audio" loop preload="none"></audio>
+
+<main>
+  <!-- ГЛАВНАЯ -->
+  <section class="hero" id="home" data-sec>
+    <div class="corner tl" data-corner></div><div class="corner tr" data-corner></div>
+    <div class="arch rv"><div class="arch-in" id="heroArt"></div></div>
+    <p class="caps rv">Приглашение на свадьбу</p>
+    <h1 class="names script rv"><span data-groom></span><span class="amp">&amp;</span><span data-bride></span></h1>
+    <p class="date rv" data-dots></p>
+    <p class="place rv" data-venue></p>
+    <div class="scroll-hint" aria-hidden="true"></div>
+  </section>
+
+  <!-- ДАТА -->
+  <section class="tint" id="date" data-sec>
+    <div class="corner tl" data-corner></div><div class="corner br" data-corner></div>
+    <p class="caps rv">Дорогие родные и друзья</p>
+    <h2 class="rv">Мы женимся!</h2>
+    <p class="rv">Один день в этом году станет для нас особенным, и мы хотим провести его в кругу самых близких и дорогих людей. С огромной радостью приглашаем вас на нашу свадьбу.</p>
+    <svg class="fdivider rv" data-divider viewBox="0 0 220 50" aria-hidden="true"></svg>
+    <div class="cal rv">
+      <div class="month" id="calMonth"></div>
+      <div class="cal-grid" id="calGrid"></div>
+    </div>
+    <p class="caps rv" style="margin-top:44px">До торжества осталось</p>
+    <div class="count rv" id="count" style="margin-top:14px">
+      <div class="u"><b id="cd-d">0</b><span>дней</span></div>
+      <div class="u"><b id="cd-h">0</b><span>часов</span></div>
+      <div class="u"><b id="cd-m">0</b><span>минут</span></div>
+      <div class="u"><b id="cd-s">0</b><span>секунд</span></div>
+    </div>
+    <div class="btn-row rv">
+      <a class="btn" id="gcal" target="_blank" rel="noopener">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3.5" y="5" width="17" height="15" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4M12 13v4M10 15h4"/></svg>
+        Google Календарь</a>
+      <button class="btn ghost" id="ics" type="button">Скачать .ics</button>
+    </div>
+  </section>
+
+  <!-- ИСТОРИЯ -->
+  <section id="story" data-sec>
+    <div class="corner tr" data-corner></div>
+    <p class="caps rv">Наша история</p>
+    <h2 class="rv">Как всё начиналось</h2>
+    <div class="story" id="storyList"></div>
+  </section>
+
+  <!-- ПРОГРАММА -->
+  <section class="tint" id="program" data-sec>
+    <div class="corner tl" data-corner></div><div class="corner br" data-corner></div>
+    <p class="caps rv">Программа дня</p>
+    <h2 class="rv">Как всё пройдёт</h2>
+    <div class="tl" id="timeline"></div>
+  </section>
+
+  <!-- МЕСТО -->
+  <section id="place" data-sec>
+    <div class="corner tr" data-corner></div>
+    <p class="caps rv">Место проведения</p>
+    <h2 class="rv">Где нас найти</h2>
+    <p class="venue rv" data-venue></p>
+    <button class="addr rv" id="copyAddr" type="button" title="Скопировать адрес">
+      <span data-address></span>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a1 1 0 0 1 1-1h10"/></svg>
+    </button>
+    <div class="map rv"><iframe id="mapFrame" loading="lazy" title="Карта места проведения" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
+    <div class="btn-row rv" style="margin-top:0">
+      <a class="btn" id="routeG" target="_blank" rel="noopener">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+        Google Maps</a>
+      <a class="btn ghost" id="routeY" target="_blank" rel="noopener">Яндекс Карты</a>
+    </div>
+  </section>
+
+  <!-- ДРЕСС-КОД -->
+  <section class="tint" id="dress" data-sec>
+    <div class="corner tl" data-corner></div><div class="corner br" data-corner></div>
+    <p class="caps rv">Дресс-код</p>
+    <h2 class="rv">Палитра вечера</h2>
+    <p class="rv">Нам будет очень приятно, если вы поддержите цветовую гамму праздника в своих нарядах.</p>
+    <div class="swatches rv" id="swatches"></div>
+    <div class="dress rv">
+      <div><h3>👗 Дамы</h3><p>Платья пастельных оттенков: пудровый, персиковый, шалфей, лаванда.</p></div>
+      <div><h3>🤵 Господа</h3><p>Классический костюм: бежевый, серый, тёмно-зелёный или синий.</p></div>
+    </div>
+    <p class="rv" style="font-size:15.5px;color:var(--muted);margin-top:16px">Пожалуйста, не надевайте полностью белые наряды — этот цвет мы оставим невесте 🤍</p>
+  </section>
+
+  <!-- ДЕТАЛИ -->
+  <section id="details" data-sec>
+    <div class="corner tr" data-corner></div>
+    <p class="caps rv">Детали</p>
+    <h2 class="rv">Немного важного</h2>
+    <div class="cards">
+      <div class="card rv">
+        <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="8" width="18" height="13" rx="1"/><path d="M12 8v13M3 12h18M12 8S10 3 7.5 4 9 8 12 8zm0 0s2-5 4.5-4S15 8 12 8z"/></svg></div>
+        <div><h3>Подарки</h3><p>Ваше присутствие — лучший подарок. Если хотите нас порадовать, будем благодарны за вклад в бюджет нашей молодой семьи.</p></div>
+      </div>
+      <div class="card rv">
+        <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="9" r="3"/><path d="M12 12v9M9 6.5C7 4 4 5 4 8s4 3 8 1M15 6.5C17 4 20 5 20 8s-4 3-8 1M12 17c-3 0-5-2-5-2M12 17c3 0 5-2 5-2"/></svg></div>
+        <div><h3>Цветы</h3><p>Просим не дарить букеты — мы не успеем ими насладиться. Вместо цветов можно подарить книгу или открытку с тёплым пожеланием.</p></div>
+      </div>
+      <div class="card rv">
+        <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 7h16v10H4z"/><circle cx="12" cy="12" r="3"/><path d="M8 7l1.5-2.5h5L16 7"/></svg></div>
+        <div><h3>Фото и видео</h3><p>Делитесь моментами праздника! Отмечайте фото хэштегом <b id="hashtag"></b></p></div>
+      </div>
+      <div class="card rv">
+        <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 18V5l11-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="17" cy="16" r="3"/></svg></div>
+        <div><h3>Плейлист</h3><p>Хотите, чтобы на вечере прозвучала ваша любимая песня? Напишите её в анкете ниже.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="tint" id="faq" data-sec>
+    <div class="corner tl" data-corner></div>
+    <p class="caps rv">Вопросы и ответы</p>
+    <h2 class="rv">Если что-то неясно</h2>
+    <div class="faq rv" id="faqList"></div>
+    <div class="contact rv" style="margin-top:30px">
+      <p class="caps">Координатор свадьбы</p>
+      <p class="who" id="coordName"></p>
+      <p class="role">поможет с любым вопросом в день торжества</p>
+      <div class="btn-row" style="margin-top:0">
+        <a class="btn sage" id="coordCall"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>Позвонить</a>
+        <a class="btn ghost" id="coordTg" target="_blank" rel="noopener">Telegram</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- АНКЕТА -->
+  <section id="rsvp" data-sec>
+    <div class="corner tl" data-corner></div><div class="corner tr" data-corner></div>
+    <p class="caps rv">Анкета гостя</p>
+    <h2 class="rv">Подтвердите присутствие</h2>
+    <p class="rv" style="margin-bottom:26px">Будем благодарны за ответ до <b data-deadline></b></p>
+    <form id="rsvpForm" class="rv" novalidate>
+      <label class="f"><span>Ваше имя и фамилия</span><input type="text" name="name" autocomplete="name" placeholder="Например, Анна Иванова"><em class="errmsg" id="nameErr">Пожалуйста, укажите имя</em></label>
+      <div>
+        <div class="legend">Вы придёте?</div>
+        <div class="opts">
+          <label><input type="radio" name="attend" value="Да, с радостью" checked><span>Да, с радостью 🤍</span></label>
+          <label><input type="radio" name="attend" value="К сожалению, не смогу"><span>Не смогу</span></label>
+        </div>
+      </div>
+      <div id="guestsBox">
+        <div class="legend">Сколько человек (включая вас)</div>
+        <div class="stepper">
+          <button type="button" id="gMinus" aria-label="Меньше">−</button>
+          <output id="gVal">1</output>
+          <button type="button" id="gPlus" aria-label="Больше">+</button>
+        </div>
+      </div>
+      <label class="f" id="songBox"><span>Песня для плейлиста</span><input type="text" name="song" placeholder="Исполнитель — песня"></label>
+      <label class="f"><span>Пожелания молодожёнам</span><textarea name="comment" placeholder="Несколько тёплых слов…"></textarea></label>
+      <div style="text-align:center"><button class="btn" type="submit" id="sendBtn" style="width:100%">Отправить ответ</button></div>
+    </form>
+    <div class="thanks" id="thanks">
+      <svg width="70" height="60" viewBox="0 0 70 60" aria-hidden="true" id="thanksArt" style="overflow:visible"></svg>
+      <h2 style="margin:6px 0 8px">Спасибо!</h2>
+      <p id="thanksText"></p>
+      <button class="btn ghost" id="again" style="margin-top:18px">Изменить ответ</button>
+    </div>
+  </section>
+
+  <footer>
+    <div class="corner bl" data-corner></div><div class="corner br" data-corner></div>
+    <svg class="fdivider" data-divider viewBox="0 0 220 50" aria-hidden="true"></svg>
+    <p class="caps">С любовью</p>
+    <p class="script" style="margin-top:12px"><span data-groom></span> &amp; <span data-bride></span></p>
+    <p class="caps" style="margin-top:14px" data-dots></p>
+  </footer>
+</main>
+
+<script>
+/* =========================================================
+   НАСТРОЙКИ — меняйте всё здесь
+   ========================================================= */
+const CONFIG = {
+  groom: "Амир",
+  bride: "Азиза",
+  date: "2027-06-12T16:00:00",         // дата и время начала
+  durationHours: 7,                    // для календаря
+  timezone: "Asia/Tashkent",
+  venue: "Загородный клуб «Сад»",
+  address: "г. Ташкент, ул. Садовая, 12",
+  mapQuery: "Tashkent",                // адрес или координаты "41.31,69.24"
+  rsvpDeadline: "15 мая 2027",
+  hashtag: "#АмирАзиза2027",
+  whatsapp: "",                        // номер без + (например 998901234567) — ответы придут в WhatsApp
+  telegram: "",                        // или username без @
+  music: "",                           // ссылка на mp3 (необязательно)
+  coordinator: { name: "Нигора", phone: "+998 90 000 00 00", telegram: "" },
+  palette: [
+    ["#f4d3d0", "пудровый"], ["#f3c9a8", "персик"], ["#c9d6c5", "шалфей"],
+    ["#d8cfe6", "лаванда"], ["#efe4d2", "айвори"], ["#5d7466", "олива"]
+  ],
+  story: [
+    ["2021", "Знакомство", "Мы впервые встретились у общих друзей — и проговорили весь вечер."],
+    ["2022", "Первое свидание", "Прогулка по вечернему городу, которая длилась до самого рассвета."],
+    ["2025", "Предложение", "Тот самый вопрос — и самое счастливое «да» в нашей жизни."],
+    ["2027", "Свадьба", "Начинаем новую главу и хотим, чтобы вы были рядом."]
+  ],
+  timeline: [
+    ["15:30", "Сбор гостей", "Welcome-зона, чай, угощения и живая музыка в саду"],
+    ["16:00", "Церемония", "Самый трогательный момент дня"],
+    ["17:00", "Фотосессия", "Общие фото с гостями"],
+    ["18:00", "Банкет", "Ужин, тосты, танцы и сюрпризы"],
+    ["22:30", "Свадебный торт", "Сладкий финал вечера"],
+    ["23:00", "Завершение", "Прощальный салют"]
+  ],
+  faq: [
+    ["Можно ли прийти с детьми?", "Мы очень любим детей, но этот вечер планируем для взрослых. Будем благодарны за понимание."],
+    ["Есть ли парковка?", "Да, на территории есть бесплатная парковка для гостей."],
+    ["До скольки продлится праздник?", "Ориентировочно до 23:00. Для гостей из других городов можем помочь с такси."],
+    ["Можно ли снимать церемонию?", "Конечно! Только, пожалуйста, не выходите в проход — у нас работает фотограф."]
+  ]
+};
+</script>
+
+<script>
+(() => {
+  const C = CONFIG;
+  const $ = s => document.querySelector(s);
+  const $$ = s => document.querySelectorAll(s);
+  const d = new Date(C.date);
+  const pad = n => String(n).padStart(2, "0");
+  const dots = `${pad(d.getDate())} · ${pad(d.getMonth()+1)} · ${d.getFullYear()}`;
+
+  /* ---------- текст ---------- */
+  const fill = (sel, v) => $$(sel).forEach(e => e.textContent = v);
+  fill("[data-groom]", C.groom); fill("[data-bride]", C.bride);
+  fill("[data-venue]", C.venue); fill("[data-address]", C.address);
+  fill("[data-deadline]", C.rsvpDeadline); fill("[data-dots]", dots);
+  $("#sealMono").textContent = C.groom[0] + "&" + C.bride[0];
+  $("#hashtag").textContent = C.hashtag;
+  document.title = `${C.groom} & ${C.bride} — свадьба`;
+
+  /* =========================================================
+     ЦВЕТЫ (SVG)
+     ========================================================= */
+  const COL = ["#fffdf8", "#f6d5d2", "#eeb4b3", "#f4cba9", "#d98f94", "#e2d6ee", "#f8ead0", "#fffdf8", "#f6d5d2"];
+  const GREEN = ["#7f9a86", "#9db39e", "#6b8a74", "#a9bfa5"];
+  const rnd = (seed, i) => { const x = Math.sin(seed * 99.13 + i * 12.9898) * 43758.5453; return x - Math.floor(x); };
+  const shade = c => ({ "#fffdf8":"#e8dccb", "#f6d5d2":"#e3aeb0", "#eeb4b3":"#cf8b8d", "#f4cba9":"#dfa47c", "#d98f94":"#b2666d", "#e2d6ee":"#bba9d4", "#f8ead0":"#e0c793" }[c] || "#d9c9b8");
+
+  function blossom(x, y, r, rot, c) {            // 5 лепестков
+    let s = `<g transform="translate(${x.toFixed(1)} ${y.toFixed(1)}) rotate(${rot.toFixed(0)})">`;
+    for (let i = 0; i < 5; i++)
+      s += `<ellipse rx="${(r*.55).toFixed(1)}" ry="${r.toFixed(1)}" cy="${(-r*.75).toFixed(1)}" fill="${c}" stroke="${shade(c)}" stroke-width=".6" transform="rotate(${i*72})"/>`;
+    return s + `<circle r="${(r*.33).toFixed(1)}" fill="#ecd59b"/><circle r="${(r*.14).toFixed(1)}" fill="#c4a35c"/></g>`;
+  }
+  function rose(x, y, r, rot, c) {               // роза
+    const k = shade(c);
+    let s = `<g transform="translate(${x.toFixed(1)} ${y.toFixed(1)}) rotate(${rot.toFixed(0)})">`;
+    for (let i = 0; i < 6; i++) s += `<ellipse rx="${(r*.6).toFixed(1)}" ry="${(r*.5).toFixed(1)}" cy="${(-r*.5).toFixed(1)}" fill="${c}" stroke="${k}" stroke-width=".7" transform="rotate(${i*60})"/>`;
+    s += `<circle r="${(r*.62).toFixed(1)}" fill="${c}" stroke="${k}" stroke-width=".7"/>`;
+    s += `<path d="M${-r*.08} 0 a${r*.14} ${r*.14} 0 1 1 ${r*.24} ${r*.05} a${r*.3} ${r*.3} 0 1 1 ${-r*.5} ${-r*.05} a${r*.45} ${r*.45} 0 0 1 ${r*.78} ${r*.2}" fill="none" stroke="${k}" stroke-width="${Math.max(.7, r*.07).toFixed(2)}" stroke-linecap="round"/>`;
+    return s + `</g>`;
+  }
+  function peony(x, y, r, rot, c) {              // пион
+    const k = shade(c);
+    let s = `<g transform="translate(${x.toFixed(1)} ${y.toFixed(1)}) rotate(${rot.toFixed(0)})">`;
+    for (let i = 0; i < 9; i++) s += `<circle cx="${(Math.cos(i*0.698)*r*.55).toFixed(1)}" cy="${(Math.sin(i*0.698)*r*.55).toFixed(1)}" r="${(r*.48).toFixed(1)}" fill="${c}" stroke="${k}" stroke-width=".6"/>`;
+    for (let i = 0; i < 6; i++) s += `<circle cx="${(Math.cos(i*1.05+.5)*r*.25).toFixed(1)}" cy="${(Math.sin(i*1.05+.5)*r*.25).toFixed(1)}" r="${(r*.32).toFixed(1)}" fill="${c}" stroke="${k}" stroke-width=".6"/>`;
+    return s + `<circle r="${(r*.16).toFixed(1)}" fill="#ecd59b"/></g>`;
+  }
+  function leaf(x, y, l, rot, c) {
+    return `<g transform="translate(${x.toFixed(1)} ${y.toFixed(1)}) rotate(${rot.toFixed(0)})"><path d="M0 0 C${l*.3} ${-l*.32} ${l*.7} ${-l*.32} ${l} 0 C${l*.7} ${l*.32} ${l*.3} ${l*.32} 0 0Z" fill="${c}"/><path d="M0 0 L${l*.85} 0" stroke="rgba(255,255,255,.35)" stroke-width=".6"/></g>`;
+  }
+  function bud(x, y, r, c) { return `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${r.toFixed(1)}" fill="${c}" stroke="${shade(c)}" stroke-width=".5"/>`; }
+  const KINDS = [rose, blossom, peony, blossom, rose];
+
+  // букет: листья + бутоны + разные цветы
+  function bouquet(x, y, s, seed, spread = 1) {
+    let out = "";
+    for (let i = 0; i < 8; i++) out += leaf(x, y, s * (2 + rnd(seed, i) * 1.2), rnd(seed, i + 50) * 360, GREEN[i % 4]);
+    for (let i = 0; i < 6; i++) {
+      const a = rnd(seed, i + 60) * Math.PI * 2, rr = s * (1.4 + rnd(seed, i + 70) * .6) * spread;
+      out += bud(x + Math.cos(a) * rr, y + Math.sin(a) * rr * .8, s * .2, COL[Math.floor(rnd(seed, i + 80) * COL.length)]);
+    }
+    for (let i = 0; i < 5; i++) {
+      const a = rnd(seed, i + 10) * Math.PI * 2, rr = s * (.5 + rnd(seed, i + 20) * .7) * spread;
+      const kind = KINDS[Math.floor(rnd(seed, i + 90) * KINDS.length)];
+      out += kind(x + Math.cos(a) * rr, y + Math.sin(a) * rr * .75, s * (.55 + rnd(seed, i + 30) * .3), rnd(seed, i + 40) * 360, COL[Math.floor(rnd(seed, i + 100) * COL.length)]);
+    }
+    return out + rose(x, y, s * .85, seed * 37, COL[Math.floor(rnd(seed, 200) * 5)]);
+  }
+
+  /* ---------- ворота ---------- */
+  function gateLeaf() {
+    const W = 180, H = 620, top = x => 150 - 95 * Math.sin((x / W) * Math.PI / 2), c = "#2c3734";
+    let s = `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" aria-hidden="true"><g stroke="${c}" fill="none" stroke-linecap="round">`;
+    s += `<path d="M4 ${top(4)} V${H-4} H${W-3} V${top(W-3)}" stroke-width="6"/>`;
+    const archPath = off => { let p = "M4 " + (top(4)+off); for (let x = 4; x <= W-3; x += 4) p += ` L${x} ${(top(x)+off).toFixed(1)}`; return p; };
+    s += `<path d="${archPath(0)}" stroke-width="6"/><path d="${archPath(34)}" stroke-width="3"/>`;
+    for (let x = 22; x < W-6; x += 19) {
+      const t = top(x);
+      s += `<line x1="${x}" y1="${t-22}" x2="${x}" y2="${H-4}" stroke-width="3"/><path d="M${x} ${t-34} l5 10 -5 4 -5 -4z" fill="${c}" stroke-width="1"/>`;
+    }
+    [360, 400, 560].forEach(y => s += `<line x1="4" y1="${y}" x2="${W-3}" y2="${y}" stroke-width="${y === 560 ? 5 : 3}"/>`);
+    for (let x = 12.5; x < W-6; x += 19) s += `<circle cx="${x+9.5}" cy="380" r="8" stroke-width="2"/>`;
+    for (let x = 22; x < W-20; x += 38) s += `<path d="M${x} ${top(x+9)+25} c0-12 19-12 19 0 c0 7-9 8-10 2" stroke-width="2"/>`;
+    s += `<path d="M${W-3} 210 c-40 0-60 30-60 60 s20 60 60 60" stroke-width="3"/><path d="M${W-3} 235 c-25 0-36 18-36 35 s11 35 36 35" stroke-width="2"/><path d="M${W-60} 270 c-20-10-36 6-30 20 c4 10 18 8 18-2" stroke-width="2"/>`;
+    for (let x = 22; x < W-20; x += 38) s += `<path d="M${x} 545 c0-20 19-20 19-8 c0 6-8 7-9 2 M${x+19} 545 c0-20 19-20 19-8" stroke-width="2"/>`;
+    s += `</g>`;
+    // цветы
+    s += bouquet(W-8, top(W-8)-4, 13, 1) + bouquet(W*.55, top(W*.55)-2, 10, 2) + bouquet(22, top(22)+2, 9, 3);
+    s += bouquet(W-10, 262, 11, 4);
+    for (let y = 300; y < 560; y += 32) {
+      const i = Math.round(y / 32);
+      s += leaf(W-6, y+8, 15, 110 + (i % 2) * 140, GREEN[i % 4]);
+      s += KINDS[i % 5](W-6 + Math.sin(y) * 3, y, 6 + (i % 3), y, COL[i % COL.length]);
+    }
+    s += bouquet(W*.5, 562, 10, 5) + bouquet(18, 560, 8, 6);
+    return s + `</svg>`;
+  }
+  $$("[data-leaf]").forEach(e => e.innerHTML = gateLeaf());
+  $$("[data-cap]").forEach((e, i) => e.innerHTML =
+    `<svg viewBox="0 0 120 90" aria-hidden="true" style="width:100%;overflow:visible">${bouquet(60, 58, 17, 7+i)}${bouquet(30, 70, 11, 9+i)}${bouquet(92, 68, 11, 11+i)}</svg>`);
+  $$("[data-vine]").forEach((e, i) => {
+    let s = `<svg viewBox="0 0 50 520" preserveAspectRatio="none" style="width:100%;height:100%;overflow:visible" aria-hidden="true"><path d="M25 0 C5 60 45 120 25 180 S5 300 25 360 S45 460 25 520" fill="none" stroke="#7f9a86" stroke-width="1.6"/>`;
+    for (let k = 0; k < 20; k++) {
+      const y = 20 + k * 26, x = 25 + Math.sin(y / 30) * 15;
+      s += leaf(x, y, 13, k % 2 ? 20 : 160, GREEN[k % 4]);
+      if (k % 3 === 0) s += KINDS[(k + i) % 5](x, y, 6, y, COL[(k + i) % COL.length]);
+    }
+    e.innerHTML = s + `</svg>`;
+  });
+  let g = `<path d="M10 22 Q230 140 450 22" fill="none" stroke="#7f9a86" stroke-width="1.5" opacity=".7"/>`;
+  for (let t = 0.04; t < 0.98; t += 0.075) {
+    const x = (1-t)*(1-t)*10 + 2*(1-t)*t*230 + t*t*450, y = (1-t)*(1-t)*22 + 2*(1-t)*t*140 + t*t*22;
+    g += bouquet(x, y, 6 + 4 * Math.sin(t * Math.PI), 20 + t * 17);
+  }
+  $("#garland").innerHTML = g;
+  $$("[data-bush]").forEach((e, i) => {
+    let s = `<svg viewBox="0 0 300 200" aria-hidden="true" style="width:100%;display:block;overflow:visible"><ellipse cx="150" cy="200" rx="160" ry="90" fill="#9fb59f"/><ellipse cx="90" cy="180" rx="100" ry="70" fill="#8ea990"/>`;
+    [[70,130,22],[150,120,18],[220,150,16],[40,175,15],[120,165,20],[200,185,14],[260,190,12]].forEach(([x,y,r],k) => s += bouquet(x, y, r, 60 + k + i*10));
+    e.innerHTML = s + `</svg>`;
+  });
+
+  /* ---------- уголки, разделители, герой ---------- */
+  function cornerSVG(seed) {
+    let s = `<svg viewBox="0 0 160 160" aria-hidden="true"><path d="M0 10 Q60 20 120 4 M10 0 Q20 60 4 120" fill="none" stroke="#7f9a86" stroke-width="1.3"/>`;
+    for (let i = 1; i < 7; i++) {
+      s += leaf(i * 18, 12 - i * 1.2, 15, i % 2 ? -30 : 30, GREEN[i % 4]);
+      s += leaf(12 - i * 1.2, i * 18, 15, i % 2 ? 60 : 120, GREEN[(i+1) % 4]);
+    }
+    s += bud(118, 6, 4, COL[2]) + bud(6, 118, 4, COL[3]);
+    return s + bouquet(34, 34, 17, seed) + bouquet(76, 18, 9, seed + 1) + bouquet(18, 76, 9, seed + 2) + `</svg>`;
+  }
+  $$("[data-corner]").forEach((e, i) => e.innerHTML = cornerSVG(300 + i * 3));
+  $$("[data-divider]").forEach((e, i) => e.innerHTML =
+    `<path d="M10 25 Q60 18 92 25 M128 25 Q160 32 210 25" fill="none" stroke="#b8995a" stroke-width=".8"/>` +
+    leaf(70, 22, 12, 200, GREEN[0]) + leaf(150, 27, 12, -20, GREEN[2]) + bouquet(110, 25, 11, 400 + i, .8));
+
+  function sprig(x, y, len, ang, flip) {
+    const f = flip ? -1 : 1;
+    let s = `<g transform="translate(${x} ${y}) rotate(${ang}) scale(${f} 1)"><path d="M0 0 Q${len*.15} ${-len*.5} 0 ${-len}" stroke="#8fa596" fill="none" stroke-width="1.1"/>`;
+    for (let i = 1; i < 9; i++) {
+      const t = i / 9, py = -len * t, px = len * .15 * 2 * t * (1 - t), side = i % 2 ? 1 : -1;
+      s += leaf(px, py, 18 - i, side > 0 ? -35 : 215, GREEN[i % 4]);
+    }
+    return s + `</g>`;
+  }
+  let ring = "";
+  [[200, 15, 1], [330, 11, 2], [30, 9, 3], [115, 17, 4], [160, 8, 5], [260, 7, 6]].forEach(([deg, sz, sd]) => {
+    const a = deg * Math.PI / 180; ring += bouquet(150 + Math.cos(a) * 64, 190 + Math.sin(a) * 64, sz, 500 + sd, .8);
+  });
+  let bed = "";
+  for (let x = 0; x <= 300; x += 34) bed += bouquet(x, 392 - (x % 68 ? 6 : 0), 12 + (x % 3) * 2, 600 + x);
+  $("#heroArt").innerHTML = `<svg viewBox="0 0 300 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    ${sprig(60, 400, 230, -20, false)}${sprig(240, 400, 230, 20, true)}${sprig(100, 400, 160, -6, true)}${sprig(200, 400, 160, 6, false)}
+    <circle cx="150" cy="190" r="64" fill="none" stroke="#b8995a" stroke-width=".9"/>
+    <circle cx="150" cy="190" r="57" fill="#fffdf8" stroke="#b8995a" stroke-width=".4"/>
+    <text x="150" y="203" text-anchor="middle" font-family="Great Vibes" font-size="46" fill="#2f3a36">${C.groom[0]}<tspan fill="#c97d82" font-size="32" dx="2" dy="-2">&amp;</tspan><tspan dx="2" dy="2">${C.bride[0]}</tspan></text>
+    <text x="150" y="228" text-anchor="middle" font-family="Montserrat" font-size="7" letter-spacing="2.5" fill="#857f7a">${pad(d.getDate())}.${pad(d.getMonth()+1)}.${d.getFullYear()}</text>
+    ${ring}${bed}</svg>`;
+  $("#thanksArt").innerHTML = bouquet(35, 32, 14, 777);
+
+  /* ---------- открытие ворот ---------- */
+  const intro = $("#intro"), audio = $("#audio"), mBtn = $("#music"), nav = $("#nav");
+  if (C.music) { audio.src = C.music; mBtn.style.display = "flex"; }
+  function openGate() {
+    if (intro.classList.contains("open")) return;
+    intro.classList.add("open");
+    document.body.classList.remove("locked");
+    setTimeout(() => petals(36), 600);
+    setTimeout(() => nav.classList.add("show"), 2600);
+    if (C.music) audio.play().then(() => mBtn.classList.add("on")).catch(() => {});
+    setTimeout(() => intro.remove(), 3000);
+  }
+  $("#openBtn").addEventListener("click", openGate);
+  mBtn.addEventListener("click", () => {
+    if (audio.paused) audio.play().then(() => mBtn.classList.add("on")).catch(() => {});
+    else { audio.pause(); mBtn.classList.remove("on"); }
+  });
+  function petals(n) {
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const pc = ["#fff", "#f6d5d2", "#eeb4b3", "#f4cba9", "#fbe9e6"];
+    for (let i = 0; i < n; i++) {
+      const p = document.createElement("i");
+      p.className = "petal";
+      p.style.left = Math.random() * 100 + "vw";
+      p.style.background = `linear-gradient(135deg,${pc[i % pc.length]},#fff)`;
+      p.style.setProperty("--dx", (Math.random() * 160 - 80) + "px");
+      p.style.setProperty("--r", (Math.random() * 720 - 360) + "deg");
+      p.style.animationDuration = (5 + Math.random() * 5) + "s";
+      p.style.animationDelay = (Math.random() * 3) + "s";
+      const sz = 8 + Math.random() * 9; p.style.width = p.style.height = sz + "px";
+      document.body.appendChild(p);
+      p.addEventListener("animationend", () => p.remove());
+    }
+  }
+
+  /* ---------- тост ---------- */
+  let tt;
+  function toast(msg) { const t = $("#toast"); t.textContent = msg; t.classList.add("show"); clearTimeout(tt); tt = setTimeout(() => t.classList.remove("show"), 2400); }
+
+  /* ---------- навигация и прогресс ---------- */
+  $$("#nav a").forEach(a => a.addEventListener("click", e => {
+    e.preventDefault(); $(a.getAttribute("href")).scrollIntoView({ behavior: "smooth" });
+  }));
+  const navMap = { home: "home", date: "date", story: "date", program: "program", place: "place", dress: "place", details: "place", faq: "rsvp", rsvp: "rsvp" };
+  const secIO = new IntersectionObserver(es => es.forEach(en => {
+    if (en.isIntersecting) {
+      const k = navMap[en.target.id];
+      $$("#nav a").forEach(a => a.classList.toggle("on", a.dataset.nav === k));
+    }
+  }), { rootMargin: "-45% 0px -50% 0px" });
+  $$("[data-sec]").forEach(s => secIO.observe(s));
+  addEventListener("scroll", () => {
+    const h = document.documentElement.scrollHeight - innerHeight;
+    $("#progress").style.width = (h > 0 ? scrollY / h * 100 : 0) + "%";
+  }, { passive: true });
+
+  /* ---------- календарь ---------- */
+  const months = ["январь","февраль","март","апрель","май","июнь","июль","август","сентябрь","октябрь","ноябрь","декабрь"];
+  $("#calMonth").textContent = `${months[d.getMonth()]} ${d.getFullYear()}`;
+  let cal = ["пн","вт","ср","чт","пт","сб","вс"].map(x => `<div class="dow">${x}</div>`).join("");
+  const first = (new Date(d.getFullYear(), d.getMonth(), 1).getDay() + 6) % 7;
+  const days = new Date(d.getFullYear(), d.getMonth() + 1, 0).getDate();
+  for (let i = 0; i < first; i++) cal += "<div></div>";
+  for (let i = 1; i <= days; i++) {
+    const we = (first + i - 1) % 7 >= 5;
+    cal += `<div class="${i === d.getDate() ? "hit" : we ? "we" : ""}">${i}</div>`;
+  }
+  $("#calGrid").innerHTML = cal;
+
+  // добавить в календарь
+  const fmt = t => `${t.getFullYear()}${pad(t.getMonth()+1)}${pad(t.getDate())}T${pad(t.getHours())}${pad(t.getMinutes())}00`;
+  const end = new Date(d.getTime() + C.durationHours * 36e5);
+  const title = `Свадьба ${C.groom} & ${C.bride}`;
+  $("#gcal").href = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(title)}&dates=${fmt(d)}/${fmt(end)}&ctz=${encodeURIComponent(C.timezone)}&location=${encodeURIComponent(C.venue + ", " + C.address)}`;
+  $("#ics").addEventListener("click", () => {
+    const ics = ["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//wedding//RU","BEGIN:VEVENT",
+      `UID:${fmt(d)}-wedding`, `DTSTAMP:${fmt(new Date())}`, `DTSTART;TZID=${C.timezone}:${fmt(d)}`, `DTEND;TZID=${C.timezone}:${fmt(end)}`,
+      `SUMMARY:${title}`, `LOCATION:${C.venue}\\, ${C.address}`,
+      "BEGIN:VALARM","TRIGGER:-P1D","ACTION:DISPLAY","DESCRIPTION:Завтра свадьба!","END:VALARM","END:VEVENT","END:VCALENDAR"].join("\r\n");
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(new Blob([ics], { type: "text/calendar" }));
+    a.download = "wedding.ics"; a.click();
+    setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+    toast("Событие сохранено в календарь");
+  });
+
+  /* ---------- отсчёт ---------- */
+  function tick() {
+    let ms = d - new Date();
+    if (ms <= 0) { $("#count").innerHTML = `<p class="script" style="font-size:40px;color:var(--rose-d)">Сегодня наш день!</p>`; return clearInterval(iv); }
+    const D = Math.floor(ms / 864e5); ms -= D * 864e5;
+    const H = Math.floor(ms / 36e5); ms -= H * 36e5;
+    const M = Math.floor(ms / 6e4); ms -= M * 6e4;
+    $("#cd-d").textContent = D; $("#cd-h").textContent = pad(H);
+    $("#cd-m").textContent = pad(M); $("#cd-s").textContent = pad(Math.floor(ms / 1e3));
+  }
+  const iv = setInterval(tick, 1000); tick();
+
+  /* ---------- история, программа, FAQ ---------- */
+  const heart = `<svg width="12" height="12" viewBox="0 0 24 24"><path fill="currentColor" d="M12 21s-7.5-4.6-9.6-9.2C.9 8.4 3 4.5 6.7 4.5c2.1 0 3.6 1.2 5.3 3.1 1.7-1.9 3.2-3.1 5.3-3.1 3.7 0 5.8 3.9 4.3 7.3C19.5 16.4 12 21 12 21z"/></svg>`;
+  $("#storyList").innerHTML = C.story.map(([y, h, p]) =>
+    `<div class="st rv"><div class="yr">${heart}${y}</div><div><h3>${h}</h3><p>${p}</p></div></div>`).join("");
+  $("#timeline").innerHTML = C.timeline.map(([t, h, p], i) =>
+    `<div class="it rv"><div class="t">${t}</div><div class="ic"><svg width="26" height="26" viewBox="-13 -13 26 26">${KINDS[i % 5](0, 0, 7.5, i * 30, COL[(i + 1) % 7])}</svg></div><div><h3>${h}</h3><p>${p}</p></div></div>`).join("");
+  $("#faqList").innerHTML = C.faq.map(([q, a]) => `<details><summary>${q}</summary><p>${a}</p></details>`).join("");
+
+  /* ---------- координатор ---------- */
+  $("#coordName").textContent = C.coordinator.name;
+  $("#coordCall").href = "tel:" + C.coordinator.phone.replace(/[^\d+]/g, "");
+  if (C.coordinator.telegram) $("#coordTg").href = "https://t.me/" + C.coordinator.telegram; else $("#coordTg").remove();
+
+  /* ---------- место ---------- */
+  const q = encodeURIComponent(C.mapQuery || C.address);
+  $("#mapFrame").src = `https://maps.google.com/maps?q=${q}&z=15&output=embed`;
+  $("#routeG").href = `https://www.google.com/maps/dir/?api=1&destination=${q}`;
+  $("#routeY").href = `https://yandex.ru/maps/?rtext=~${q}`;
+  $("#copyAddr").addEventListener("click", async () => {
+    try { await navigator.clipboard.writeText(C.address); toast("Адрес скопирован"); }
+    catch (e) { toast(C.address); }
+  });
+
+  /* ---------- дресс-код ---------- */
+  $("#swatches").innerHTML = C.palette.map(([c, n]) => `<div class="sw"><i style="background:${c}"></i><span>${n}</span></div>`).join("");
+
+  /* ---------- анкета ---------- */
+  const form = $("#rsvpForm"), thanks = $("#thanks"), KEY = "wedding-rsvp";
+  let guests = 1;
+  const setG = v => { guests = Math.min(10, Math.max(1, v)); $("#gVal").textContent = guests; };
+  $("#gMinus").onclick = () => setG(guests - 1);
+  $("#gPlus").onclick = () => setG(guests + 1);
+  form.querySelectorAll("[name=attend]").forEach(r => r.addEventListener("change", () => {
+    const no = form.attend.value.startsWith("К");
+    $("#guestsBox").classList.toggle("hide", no); $("#songBox").classList.toggle("hide", no);
+  }));
+  form.name.addEventListener("input", () => { form.name.classList.remove("err"); $("#nameErr").classList.remove("show"); });
+
+  function showThanks(data) {
+    form.style.display = "none"; thanks.classList.add("show");
+    $("#thanksText").textContent = data.attend.startsWith("Да")
+      ? `${data.name}, спасибо! Ждём вас ${dots}. Это будет прекрасный день!`
+      : `${data.name}, спасибо, что предупредили. Нам будет вас не хватать!`;
+  }
+  try { const saved = JSON.parse(localStorage.getItem(KEY)); if (saved) showThanks(saved); } catch (e) {}
+
+  form.addEventListener("submit", e => {
+    e.preventDefault();
+    const name = form.name.value.trim();
+    if (!name) { form.name.classList.add("err"); $("#nameErr").classList.add("show"); form.name.focus(); return; }
+    const going = form.attend.value.startsWith("Да");
+    const data = { name, attend: form.attend.value, guests: going ? guests : 0, song: form.song.value.trim() || "—", comment: form.comment.value.trim() || "—" };
+    const msg = `💌 Анкета гостя\nИмя: ${data.name}\nПрисутствие: ${data.attend}` + (going ? `\nКол-во гостей: ${data.guests}\nПесня: ${data.song}` : "") + `\nПожелания: ${data.comment}`;
+    const btn = $("#sendBtn"); btn.disabled = true; btn.textContent = "Отправляем…";
+    setTimeout(() => {
+      if (C.whatsapp) window.open(`https://wa.me/${C.whatsapp}?text=${encodeURIComponent(msg)}`, "_blank");
+      else if (C.telegram) window.open(`https://t.me/${C.telegram}?text=${encodeURIComponent(msg)}`, "_blank");
+      try { localStorage.setItem(KEY, JSON.stringify(data)); } catch (e) {}
+      btn.disabled = false; btn.textContent = "Отправить ответ";
+      showThanks(data);
+      if (going) petals(24);
+      thanks.scrollIntoView({ behavior: "smooth", block: "center" });
+    }, 600);
+  });
+  $("#again").addEventListener("click", () => {
+    thanks.classList.remove("show"); form.style.display = "";
+    try { localStorage.removeItem(KEY); } catch (e) {}
+  });
+
+  /* ---------- появление при скролле ---------- */
+  const io = new IntersectionObserver(es => es.forEach(en => {
+    if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); }
+  }), { threshold: .12 });
+  $$(".rv").forEach(el => io.observe(el));
+})();
+</script>
+</body>
+</html>
